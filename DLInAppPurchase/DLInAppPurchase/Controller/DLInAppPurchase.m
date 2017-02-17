@@ -25,10 +25,12 @@
     NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"productIDS" ofType:@"plist"];
     self.productIDArray =  [[NSMutableArray alloc] initWithContentsOfFile:plistPath];
     
+    //监听购买结果
     [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
-
 }
 
+
+#pragma mark - UITableViewDelegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.productIDArray.count;
@@ -51,31 +53,35 @@
     [SVProgressHUD showWithStatus:@"正在加载"];
 }
 
+#pragma mark - SKProductsRequestDelegate
 -(void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response
 {
     if (response.invalidProductIdentifiers.count > 0) {
         [SVProgressHUD showErrorWithStatus:@"ProductID为无效ID"];
     }else{
+        //取到内购产品进行购买
         SKMutablePayment *payment = [SKMutablePayment paymentWithProduct:response.products.firstObject];
         [[SKPaymentQueue defaultQueue] addPayment:payment];
     }
 }
 
+
+#pragma mark - SKPaymentTransactionObserver
 - (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions {
     for (SKPaymentTransaction *transaction in transactions)
     {
         switch (transaction.transactionState)
         {
-            case SKPaymentTransactionStatePurchased:
+            case SKPaymentTransactionStatePurchased://购买成功
                 [self completeTransaction:transaction];
                 break;
-            case SKPaymentTransactionStateFailed:
+            case SKPaymentTransactionStateFailed://购买失败
                 [self failedTransaction:transaction];
                 break;
-            case SKPaymentTransactionStateRestored:
+            case SKPaymentTransactionStateRestored://恢复购买
                 [self restoreTransaction:transaction];
                 break;
-            case SKPaymentTransactionStatePurchasing:
+            case SKPaymentTransactionStatePurchasing://正在处理
                 break;
             default:
                 break;
@@ -84,12 +90,17 @@
     
 }
 
+
+#pragma mark - PrivateMethod
 - (void)completeTransaction:(SKPaymentTransaction *)transaction {
     NSString *productIdentifier = transaction.payment.productIdentifier;
     NSData *data = [NSData dataWithContentsOfURL:[[NSBundle mainBundle] appStoreReceiptURL]];
     NSString *receipt = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     if ([receipt length] > 0 && [productIdentifier length] > 0) {
         [SVProgressHUD showSuccessWithStatus:@"支付成功"];
+        /** 
+         可以将receipt发给服务器进行购买验证
+         */
     }
     [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
     
@@ -111,6 +122,7 @@
 
 -(void)dealloc
 {
+    //移除购买结果监听
     [[SKPaymentQueue defaultQueue] removeTransactionObserver:self];
 }
 
