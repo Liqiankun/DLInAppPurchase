@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AA149A541E55D71100AA2277 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AA149A4F1E55D71100AA2277 /* AppDelegate.m */; };
-		AA149A551E55D71100AA2277 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA149A511E55D71100AA2277 /* ViewController.m */; };
+		AA149A551E55D71100AA2277 /* DLInAppPurchase.m in Sources */ = {isa = PBXBuildFile; fileRef = AA149A511E55D71100AA2277 /* DLInAppPurchase.m */; };
 		AA149A581E55D73B00AA2277 /* DLProductCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AA149A571E55D73B00AA2277 /* DLProductCell.m */; };
 		AA149A651E55DC1D00AA2277 /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA149A5C1E55DC1D00AA2277 /* SVIndefiniteAnimatedView.m */; };
 		AA149A661E55DC1D00AA2277 /* SVProgressAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA149A5E1E55DC1D00AA2277 /* SVProgressAnimatedView.m */; };
@@ -44,8 +44,8 @@
 /* Begin PBXFileReference section */
 		AA149A4E1E55D71100AA2277 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		AA149A4F1E55D71100AA2277 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		AA149A501E55D71100AA2277 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		AA149A511E55D71100AA2277 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		AA149A501E55D71100AA2277 /* DLInAppPurchase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLInAppPurchase.h; sourceTree = "<group>"; };
+		AA149A511E55D71100AA2277 /* DLInAppPurchase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLInAppPurchase.m; sourceTree = "<group>"; };
 		AA149A561E55D73B00AA2277 /* DLProductCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLProductCell.h; sourceTree = "<group>"; };
 		AA149A571E55D73B00AA2277 /* DLProductCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLProductCell.m; sourceTree = "<group>"; };
 		AA149A5B1E55DC1D00AA2277 /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
@@ -103,8 +103,8 @@
 			children = (
 				AA149A4E1E55D71100AA2277 /* AppDelegate.h */,
 				AA149A4F1E55D71100AA2277 /* AppDelegate.m */,
-				AA149A501E55D71100AA2277 /* ViewController.h */,
-				AA149A511E55D71100AA2277 /* ViewController.m */,
+				AA149A501E55D71100AA2277 /* DLInAppPurchase.h */,
+				AA149A511E55D71100AA2277 /* DLInAppPurchase.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -352,7 +352,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA149A651E55DC1D00AA2277 /* SVIndefiniteAnimatedView.m in Sources */,
-				AA149A551E55D71100AA2277 /* ViewController.m in Sources */,
+				AA149A551E55D71100AA2277 /* DLInAppPurchase.m in Sources */,
 				AA149A541E55D71100AA2277 /* AppDelegate.m in Sources */,
 				AA149A691E55DC1D00AA2277 /* SVRadialGradientLayer.m in Sources */,
 				AA149A681E55DC1D00AA2277 /* SVProgressHUD.m in Sources */,
