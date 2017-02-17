@@ -95,7 +95,8 @@
 - (void)completeTransaction:(SKPaymentTransaction *)transaction {
     NSString *productIdentifier = transaction.payment.productIdentifier;
     NSData *receiptData = [NSData dataWithContentsOfURL:[[NSBundle mainBundle] appStoreReceiptURL]];
-    if ([receiptData length] > 0 && [productIdentifier length] > 0) {
+    NSString *receipt = [receiptData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+    if ([receipt length] > 0 && [productIdentifier length] > 0) {
         [SVProgressHUD showSuccessWithStatus:@"支付成功"];
         /** 
          可以将receipt发给服务器进行购买验证
