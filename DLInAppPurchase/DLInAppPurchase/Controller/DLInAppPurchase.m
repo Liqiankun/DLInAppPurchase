@@ -73,13 +73,13 @@
         switch (transaction.transactionState)
         {
             case SKPaymentTransactionStatePurchased://购买成功
-                [self completeTransaction:transaction];
+                [self dl_completeTransaction:transaction];
                 break;
             case SKPaymentTransactionStateFailed://购买失败
-                [self failedTransaction:transaction];
+                [self dl_failedTransaction:transaction];
                 break;
             case SKPaymentTransactionStateRestored://恢复购买
-                [self restoreTransaction:transaction];
+                [self dl_restoreTransaction:transaction];
                 break;
             case SKPaymentTransactionStatePurchasing://正在处理
                 break;
@@ -92,7 +92,7 @@
 
 
 #pragma mark - PrivateMethod
-- (void)completeTransaction:(SKPaymentTransaction *)transaction {
+- (void)dl_completeTransaction:(SKPaymentTransaction *)transaction {
     NSString *productIdentifier = transaction.payment.productIdentifier;
     NSData *receiptData = [NSData dataWithContentsOfURL:[[NSBundle mainBundle] appStoreReceiptURL]];
     NSString *receipt = [receiptData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
@@ -105,7 +105,7 @@
     [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
 }
 
-- (void)failedTransaction:(SKPaymentTransaction *)transaction {
+- (void)dl_failedTransaction:(SKPaymentTransaction *)transaction {
     if(transaction.error.code != SKErrorPaymentCancelled) {
         [SVProgressHUD showErrorWithStatus:@"用户取消支付"];
     } else {
@@ -115,8 +115,47 @@
 }
 
 
-- (void)restoreTransaction:(SKPaymentTransaction *)transaction {
+- (void)dl_restoreTransaction:(SKPaymentTransaction *)transaction {
     [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
+}
+
+-(void)dl_validateReceiptWiththeAppStore:(NSString *)receipt
+{
+    NSError *error;
+    NSDictionary *requestContents = @{@"receipt-data": receipt};
+    NSData *requestData = [NSJSONSerialization dataWithJSONObject:requestContents options:0 error:&error];
+    
+    if (!requestData) {
+    
+    }else{
+        
+    }
+    NSURL *storeURL;
+#ifdef DEBUG
+    storeURL = [NSURL URLWithString:@"https://sandbox.itunes.apple.com/verifyReceipt"];
+#else
+    storeURL = [NSURL URLWithString:@"https://buy.itunes.apple.com/verifyReceipt"];
+#endif
+    
+    NSMutableURLRequest *storeRequest = [NSMutableURLRequest requestWithURL:storeURL];
+    [storeRequest setHTTPMethod:@"POST"];
+    [storeRequest setHTTPBody:requestData];
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    [NSURLConnection sendAsynchronousRequest:storeRequest queue:queue
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+                               if (connectionError) {
+                                  /* 处理error */
+                               } else {
+                                   NSError *error;
+                                   NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+                                   if (!jsonResponse) {
+                                       /* 处理error */
+                                   }else{
+                                       /* 处理验证结果 */
+                                   }
+                               }
+                           }];
+
 }
 
 -(void)dealloc
